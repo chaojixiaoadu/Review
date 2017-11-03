@@ -92,3 +92,38 @@ $(function () {
     });
 })
 ```
+
+## Ajax
+
+```
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type:'get',
+            url:'http://106.14.213.216:8080/positions',
+            data:{},
+            dataType:'json',
+            contentType:'application/x-www-form-urlencoded',
+            async:false, //true 异步;false 同步
+            beforeSend:function () {
+              alert("正在进行,请稍候...");
+            },
+            success:function (res) {
+                document.write(JSON.stringify(res));
+            },
+            error:function () {
+                alert('error');
+            },
+            complete:function () {
+                alert('complete');
+                // 请求完成!
+            }
+        });
+        
+//      $.get(url,function (res) {
+//        console.log(res);
+//      })
+    })
+</script>
+```
