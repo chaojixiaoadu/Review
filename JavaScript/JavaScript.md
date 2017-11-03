@@ -1,4 +1,4 @@
-﻿# JavaScript 复习
+﻿# JavaScript
 
 标签（空格分隔）： 复习
 
@@ -59,6 +59,77 @@ console.log(c instanceof String); // false 变量c是String吗？
 > `toLocaleLowerCase()` // 小写
 `toLocaleLowerCase()` // 大写
 
+<table class="reference">
+<tbody><tr>
+<th style="width:24%">方法</th>
+    <th>描述</th>
+  </tr>
+<tr>
+<td>charAt()</td>
+    <td>返回指定索引位置的字符</td>
+  </tr>
+<tr>
+<td>concat()</td>
+    <td>连接两个或多个字符串，返回连接后的字符串</td>
+  </tr>
+<tr>
+<td>indexOf()</td>
+    <td>返回字符串中检索指定字符第一次出现的位置</td>
+  </tr>
+<tr>
+<td>lastIndexOf()</td>
+    <td>返回字符串中检索指定字符最后一次出现的位置</td>
+  </tr>
+<tr>
+<td>match()</td>
+    <td>找到一个或多个正则表达式的匹配</td>
+  </tr>
+<tr>
+<td>replace()</td>
+    <td>替换与正则表达式匹配的子串</td>
+  </tr>
+<tr>
+<td>search()</td>
+    <td>检索与正则表达式相匹配的值</td>
+  </tr>
+<tr>
+<td>slice()</td>
+    <td>提取字符串的片断，并在新的字符串中返回被提取的部分</td>
+  </tr>
+<tr>
+<td>split()</td>
+    <td>把字符串分割为子字符串数组</td>
+  </tr>
+<tr>
+<td>substr()</td>
+    <td>从起始索引号提取字符串中指定数目的字符</td>
+  </tr>
+<tr>
+<td>substring()</td>
+    <td>提取字符串中两个指定的索引号之间的字符</td>
+  </tr>
+<tr>
+<td>toLowerCase()</td>
+    <td>把字符串转换为小写</td>
+  </tr>
+<tr>
+<td>toString()</td>
+    <td>返回字符串对象值</td>
+  </tr>
+<tr>
+<td>toUpperCase()</td>
+    <td>把字符串转换为大写</td>
+  </tr>
+<tr>
+<td>trim()</td>
+    <td>移除字符串首尾空白</td>
+  </tr>
+<tr>
+<td>valueOf()</td>
+    <td>返回某个字符串对象的原始值</td>
+  </tr>
+</tbody>
+</table>
 
 #### Boolean 类型
 
