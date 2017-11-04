@@ -331,3 +331,69 @@
     当一个元素的visibility属性被设置成collapse值后，对于一般的元素，它的表现跟hidden是一样的。但例外的是，如果这个元素是table相关的元素，例如table行，table group，table列，table column group，它的表现却跟display:none一样，也就是说，它们占用的空间也会释放。 
  
 > 但遗憾的是，各种浏览器器对collapse值的处理方式不一样. 
+
+## 15. 如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？
+
+    给div设置一个宽度，然后添加margin:0 auto属性; 
+    
+    居中一个浮动元素 
+    确定容器的宽高 宽500 高 300 的层 
+    设置层的外边距 
+```
+.div { 
+    width:500px ; 
+    height:300px;//高度可以不设 
+    margin: -150px 0 0 -250px; 
+    position:relative; //相对定位 
+    background-color:pink; //方便看效果 
+    left:50%; 
+    top:50%; 
+} 
+```
+* 让绝对定位的div居中-水平居中 
+```
+position: absolute; 
+width: 1200px; 
+background: none; 
+margin: 0 auto; 
+right: 0; 
+left: 0; 
+```
+* 让绝对定位的div居中-水平居中+垂直居中 
+```
+position: absolute; 
+width: 1200px; 
+background: none; 
+margin: auto auto; 
+top: 0; 
+left: 0; 
+bottom: 0; 
+right: 0; 
+
+.div_fixed { 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    background-color: #000; 
+    width:50%; 
+    height: 50%; 
+    -webkit-transform: translateX(-50%) translateY(-50%); 
+} 
+```
+
+* 让div内部的块元素居中 
+
+```
+display: table-cell; 
+vertical-align: middle; 
+
+.div_fixed{ 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    background-color: #000; 
+    width:50%; 
+    height: 50%; 
+    -webkit-transform: translateX(-50%) translateY(-50%); 
+} 
+```
