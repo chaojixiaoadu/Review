@@ -207,7 +207,7 @@ elementObject.attachEvent(eventName,handle);//使用attachEvent（IE8.0及其以
     使用document对象获取
 
 ```
-document.getElementById('id').nodeType;
+document.getElementById('id').nodeValue;
 ```
 
 ## 13、	如何消除数组中的重复元素?
@@ -243,7 +243,8 @@ Array.prototype.method2 = function(){
     return arr;  
 }
 ```
-* 方法三：用到了数组的indexOf()方法，此方法主要用来查找元素在数组中第一次出现的位置。比较浪费资源和时间。
+* 方法三:每次取出原数组的元素，然后再对象中访问这个属性，如果存在就说明重复
+
 ```
 Array.prototype.method3 = function(){  
     //直接定义结果数组  
@@ -259,6 +260,7 @@ Array.prototype.method3 = function(){
     return arr;    
 }
 ```
+
 * 方法四：先将数组排序，然后一次比较相邻的两个元素的值，排序使用的是js原生的sort()方法。
 ```
 Array.prototype.method4 = function(){  
