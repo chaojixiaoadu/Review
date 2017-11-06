@@ -608,3 +608,293 @@ $("#id").on("click mouseover",func)//两个事件中间有空格 ，func为方�
 $("#id").bind("load scroll",function(){//你的具体方法实现});
 ```
 
+## 35、	如何获得一个字符串的字节长度？
+
+    英文字母肯定lenght和字节数都一样：都是１
+    而中文lenght=1,字节数=2
+    因此，需要作的就是把中文字符的字节数计算出来。
+    
+* 方法一：
+
+```
+alert('a'.replace(/[^\u0000-\u00ff]/g,"aaa").length); 
+
+//原理：把中文字符替换成2个英文字母，那么字节数就是2，
+//示例中改成替换成3个英文字母了。
+//因此弹出的字节数是3，如果要正确的，当然是替换成2个字母了
+//\u0000这个表示的是unicode编码
+```
+
+* 方法二：
+
+```
+var str='我我我';
+var bytesCount;
+for (var i = 0; i < str.length; i++)
+{
+  var c = str.charAt(i);
+  if (/^[\u0000-\u00ff]$/.test(c)) //匹配双字节
+  {
+  bytesCount += 1;
+  }
+  else
+  {
+  bytesCount += 2;
+  }
+}
+alert(bytesCount);
+//结果是6
+//原理也很简单，用正则判断是不是中文，如果是的话，字节数就加1。
+```
+
+> 匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+匹配双字节字符(包括汉字在内)：[^\x0000-\x00ff]
+
+> 可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
+JS中的几个函数：
+charAt(num);  //获取字符串的num位置的字符
+charCodeAt(num); //获取字符串的num位置的字符的unicode编码　
+fromCharCode(num); //获取unicode编码对应的字符
+
+## 36、	实现一个函数clone，可以对js中5种主要的数据类型（number,string,object,array,boolean）进行复制.
+
+```
+<script type="text/javascript">
+    function clone(obj) {
+        var o;
+        switch (typeof obj) {
+            case 'undefined':
+                break;
+            case 'string':
+                o = obj + '';
+                break;
+            case 'number':
+                o = obj - 0;
+                break;
+            case 'boolean':
+                o = obj;
+                break;
+            case 'object':
+                if (obj === null) {
+                    o = null;
+                } else if (Object.prototype.toString.call(obj).slice(8, -1) === 'Array') {
+                    o = [];
+                    for (var i = 0; i < obj.length; i++) {
+                        o.push(clone(obj[i]));
+                    }
+                } else {
+                    o = {};
+                    for (var k in obj) {
+                        o[k] = clone(obj[k]);
+                    }
+                }
+                break;
+            default:
+                o = obj;
+                break;
+        }
+        return o;
+    }
+
+    //测试
+    var a = [12, 34, '123'];
+    console.log(clone(a));
+    var b = null;
+    console.log(clone(b));
+    var c = {1: 'a', 2: 'b', 3: 'c'};
+    console.log(clone(c));
+    var b = 1;
+    console.log(clone(1));
+</script>
+```
+
+## 37、	使用function来模拟无参数的构造函数.
+
+```
+<script type="text/javascript">
+    //构造函数
+    function Student() {
+        //Student类中的一个方法
+        this.eat = function (food) {
+            alert("我吃" + food + "很开心，就是再来瓶可乐就更好了");
+        }
+    }
+    
+    //创建对象
+    var student1 = new Student();
+    student1.name = "小明同学";
+
+    var student2 = new Student();
+    student2.age = 18;
+
+    student1.eat("馒头");
+    student2.eat("热干面");
+
+    alert(student1.name);
+</script>
+```
+
+## 37、	统计字符串“aaaabbbccccddfgh”中，字母个数最多的字母数
+
+```
+function count(s) {
+    let count = {};
+    for(let i = 0,len = s.length; i < len; i++){
+        if(count[s.charAt(i)]){
+            count[s.charAt(i)]++;
+        }else {
+            count[s.charAt(i)] = 1;
+        }
+    }
+    return count;
+}
+```
+
+## 38、	浏览器刷新页面表单重复提交的BUG怎么解决？
+
+    F5刷新重复提交上一次的表单，这是个常见的问题。可以用hidden和session做一个同步标识，初始化hidden和session中的标识相同，在页面回传时只需要判断这2个标识是否相同，如果相同则正常执行，同时刷新hidden和session中的标识值；如果2个标识中的值不相等，说明hidden的值是上一次的表单内容，属于刷新行为。
+    
+## 39、	实现一个全选和取消全选的功能.
+
+```
+<script type="text/javascript">
+    window.onload = function () {
+       let all = document.querySelector('#all');
+       let checkbox = document.querySelectorAll('td input');
+       all.onchange = function () {
+           console.log('here');
+           for (let i = 0,len = checkbox.length; i < len; i++){
+               checkbox[i].checked = all.checked;
+           }
+       }
+    }
+</script>
+```
+
+## 40、	什么是回调地狱？
+        由于回调函数是异步的，代码中每一层的回调函数都需要依赖上一层的回调执行完，所以形成了层层嵌套的关系最终形成回调地狱。
+        
+## 41、	说明一下for循环的变量作用域.
+
+    js中作用域只有函数作用域和全局作用域，在函数体内使用var 定义的变量，会被提到函数开始处进行定义，作用域为整个函数。
+    
+## 42、	写出省市级联的代码
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        input{
+            width: 150px;
+            height: 35px;
+            text-align: center;
+        }
+        ul{
+            width: 140px;
+            height: 158px;
+            float: left;
+            list-style: none;
+            overflow-y: scroll;
+        }
+        li{
+            height: 25px;
+        }
+        .option{
+            width: 142px;
+            height: 160px;
+            position: relative;
+            text-align: center;
+            border: solid 1px gainsboro;
+            display: none;
+        }
+        .container{
+            width: 150px;
+            float: left;
+            margin-left: 15px;
+            position: relative;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            //链接外部JSON文件
+            $.get('cities.json',function (event) {
+                //遍历JSON数据,获取省份内容到下拉列表
+                $.each(event,function (key,value) {
+                    document.getElementById('list').firstElementChild.innerHTML+= '<li>'+value.name+'</li>';
+                })
+                //获取直辖市内容到下拉列表
+                $('#list').delegate('li','click',function () {
+                    $('#shi').val('');
+                    document.getElementById('shi').nextElementSibling.firstElementChild.innerHTML = '';
+                    for (var i = 0; i < event[$(this).index()].cities.length; i++){
+                        document.getElementById('shi').nextElementSibling.firstElementChild.innerHTML+= '<li>'+event[$(this).index()].cities[i]+'</li>';
+                        $(this).index();
+                        console.log(event[$(this).index()].cities.length);
+                    }
+                })
+            })
+            //点击输入框,弹出当前下拉列表
+            $('input').click(function () {
+//                console.log($(this).next())
+                $(this).next().slideToggle(500);
+            })
+            // 鼠标滑过背景样式
+            $('ul').delegate('li','mouseover',function () {
+//                console.log($('li'))
+                $(this).css('background','#b8d6ff')
+            }).delegate('li','mouseout',function () {
+                $(this).css('background','#fff')
+            })
+            // 获取选中内容到表单,隐藏下拉列表
+                $('ul').delegate('li','click',function () {
+                    var litxt = $(this).html();
+                    $(this).parents('.container').children().first().val(litxt) ;
+                    $(this).parents('.container').children().last().css('display','none')
+                })
+        })
+    </script>
+</head>
+<body>
+<!--省份输入框-->
+<div class="container">
+    <input id="province" type="text" readonly="readonly" placeholder="省份" >
+    <div id="list" class="option">
+        <ul class="provinceList"></ul>
+    </div>
+</div>
+<!--直辖市输入框-->
+<div class="container">
+    <input id="shi" type="text" readonly="readonly" placeholder="直辖市">
+    <div class="option">
+        <ul id="shiList" class="shiList"></ul>
+    </div>
+</div>
+</body>
+</html>
+```
+
+## 43、	说明一下ES6中的新特点.
+
+ * for-of循环
+
+        当使用 for-of 的时候，循环的是数组内部的元素且不会出现 for-in 中将附加属性也遍历的情况，其次，循环变量的类型和其在数组中的类型保持一致，而不是全部是 string 的情况。
+
+ 1. 默认参数
+ 2. 模版表达式
+ 3. 多行字符串
+ 4. 拆包表达式
+ 5. 改进的对象表达式
+ 6. 箭头函数 =>
+ 7. Promise 
+ 8. 块级作用域的let和const 
+ 8. 类
+ 9. 模块化
